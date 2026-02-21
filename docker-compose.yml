@@ -1,0 +1,11 @@
+services:
+  embs:
+    container_name: embs
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+      dockerfile: src/embs/Dockerfile
+
+volumes:
+  ollama_data:

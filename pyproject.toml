@@ -1,0 +1,24 @@
+[project]
+name = "code-rag"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.129.0",
+    "huggingface-hub>=1.4.1",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.13.1",
+    "torch>=2.10.0",
+    "transformers>=5.2.0",
+    "uvicorn>=0.41.0",
+]
+
+[dependency-groups]
+embs = [
+    "python-multipart>=0.0.22",
+]
+srv = [
+    "langchain>=1.2.10",
+    "langchain-chroma>=1.1.0",
+]
