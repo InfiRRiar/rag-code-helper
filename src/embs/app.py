@@ -1,8 +1,26 @@
 from fastapi import FastAPI
-from src.embs.embedders import bi_encoder
+from src.embs.encoders import bi_encoder
+from loguru import logger
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.get("/bi-encoder")
-def get_bi_encoder_answer(texts: list):
-    return bi_encoder.invoke(texts)
+class DocRequest(BaseModel):
+    doc: str
+
+class DocsRequest(BaseModel):
+    docs: list
+
+@app.post("/embedding/doc")
+def doc_emb(request: DocRequest):
+    logger.info(request.doc)
+    res = bi_encoder.invoke(request.doc)
+    res = res.detach().to("cpu").float().tolist()
+    return res
+
+
+@app.post("/embedding/docs")
+def docs_emb(request: DocsRequest):
+    res = bi_encoder.invoke(request.docs)
+    res = res.detach().to("cpu").float().tolist()
+    return res

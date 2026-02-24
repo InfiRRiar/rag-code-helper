@@ -1,5 +1,5 @@
 up:
-	docker compose up --build --force-recreate --detach
+	docker compose up --force-recreate --detach --build
 	make ollama-up
 
 down:

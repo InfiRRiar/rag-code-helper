@@ -6,7 +6,7 @@ RUN pip install -U pip uv && \
     uv sync --frozen --no-dev --group embs
 
 COPY src/embs src/embs
-COPY src/secrets.py src/secrets.py
+COPY src/settings.py src/settings.py
 COPY /.env /.env
 
 EXPOSE 8080

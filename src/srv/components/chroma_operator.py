@@ -1,24 +1,30 @@
 from langchain_chroma import Chroma
 from langchain_core.runnables import chain
 from langchain_core.documents import Document
-
+from loguru import logger
 
 class ChromaOperator:
     def __init__(self, emb_fun):
         self.vector_store = Chroma(
             collection_name="code_fragments", 
             embedding_function=emb_fun,
-            persist_directory="./chroma_langchain_db"
+            persist_directory="./chroma_langchain_db",
         )
         self.repo_name = None
     
     def set_repo(self, repo_name: str):
         self.repo_name = repo_name
+    
+    def if_repo_exists(self, repo: str):
+        res = self.get_top_k(query="test", k=1, repo=repo)
+        if len(res):
+            return True
+        return False
         
     def _strs_to_docs(self, items: list[str]):
         if self.repo_name is None:
-            print("Please, set the repo first")
-            return
+            logger.debug("Please, set the repo first")
+            return None
         docs = []
         for item in items:
             doc_item = Document(
@@ -35,6 +41,6 @@ class ChromaOperator:
             filter={"repo": repo}
         )
     
-    async def add_items(self, items: list[str]):
+    def add_items(self, items: list[str]):
         docs = self._strs_to_docs(items=items)
-        await self.vector_store.aadd_documents(documents=docs)
+        self.vector_store.add_documents(documents=docs)
