@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from src.embs.encoders import bi_encoder
+from embs.encoders import bi_encoder
 from loguru import logger
 from pydantic import BaseModel
 

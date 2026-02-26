@@ -1,11 +1,12 @@
 import argparse
 import asyncio
-from src.srv.components import ChromaOperator, embedder
+from src.srv.components import ChromaOperator, embedder, ASTSplitter
 from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
 from src.srv.utils import check_repository_input, parse_repositry
 
 chroma_operator = ChromaOperator(emb_fun=embedder)
-splitter = RecursiveCharacterTextSplitter.from_language(chunk_size=1024, chunk_overlap=50, language=Language.PYTHON)
+# splitter = RecursiveCharacterTextSplitter.from_language(chunk_size=1024, chunk_overlap=50, language=Language.PYTHON)
+splitter = ASTSplitter(chunk_size=1024)
 
 async def main_cycle(path: str):
     if not check_repository_input(path):
@@ -24,7 +25,6 @@ async def main_cycle(path: str):
         question = input()
         query = "Find the most relevant code snippet given the following query:\n" + question
         chunks = chroma_operator.get_top_k(query=query, repo=path, k=3)
-        
         
 def set_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
