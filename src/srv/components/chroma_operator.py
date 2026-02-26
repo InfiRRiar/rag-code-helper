@@ -12,7 +12,7 @@ class ChromaOperator:
         )
         self.repo_name = None
     
-    def set_repo(self, repo_name: str):
+    def set_repository(self, repo_name: str):
         self.repo_name = repo_name
     
     def if_repo_exists(self, repo: str):

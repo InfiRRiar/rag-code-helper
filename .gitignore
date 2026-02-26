@@ -10,4 +10,4 @@ wheels/
 .venv
 
 .env
-chroma_langchain_db
+chroma_langchain_db/
