@@ -1,8 +1,6 @@
 from langchain_core.embeddings import Embeddings
 import httpx
-import asyncio
 from src.settings import settings
-import torch
 
 class Embedder(Embeddings):
     def __init__(self):

@@ -1,5 +1,4 @@
 import argparse
-import asyncio
 from src.srv.components import ChromaOperator, embedder, ASTSplitter
 from langchain_text_splitters import RecursiveCharacterTextSplitter, Language
 from src.srv.utils import check_repository_input, parse_repositry
@@ -8,7 +7,7 @@ chroma_operator = ChromaOperator(emb_fun=embedder)
 # splitter = RecursiveCharacterTextSplitter.from_language(chunk_size=1024, chunk_overlap=50, language=Language.PYTHON)
 splitter = ASTSplitter(chunk_size=1024)
 
-async def main_cycle(path: str):
+def main_cycle(path: str):
     if not check_repository_input(path):
         print("Please make sure the path you've typed is actually a directory!")
     if not chroma_operator.if_repo_exists(path):
@@ -35,4 +34,4 @@ def set_parser() -> argparse.ArgumentParser:
 if __name__ == "__main__":
     parser = set_parser()
     args = parser.parse_args()
-    asyncio.run(main_cycle(args.repository))
+    main_cycle(args.repository)
