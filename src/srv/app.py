@@ -23,7 +23,7 @@ def main_cycle(path: str):
         print("> ", end="")
         question = input()
         query = "Find the most relevant code snippet given the following query:\n" + question
-        chunks = chroma_operator.get_top_k(query=query, repo=path, k=3)
+        chunks = chroma_operator.get_top_k(query=query, repo=path, k=5)
         for batch in llm_operator.stream(
             query=question,
             chunks=chunks

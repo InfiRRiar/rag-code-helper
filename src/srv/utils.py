@@ -4,7 +4,7 @@ import os
 from langchain_core.documents import Document
 
 def is_rag_file(file_path: str):
-    if file_path.startswith(".") or "_" in file_path:
+    if file_path.startswith(".") or "__" in file_path:
         return False
     if not any([file_path.endswith(ext) for ext in [".py"]]):
         return False

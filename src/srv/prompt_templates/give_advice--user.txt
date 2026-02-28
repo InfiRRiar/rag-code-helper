@@ -1,0 +1,7 @@
+# User's question
+
+{question}
+
+# Fragments of code
+
+{fragments}

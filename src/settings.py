@@ -30,6 +30,10 @@ class Settings(BaseSettings):
         default=3,
         json_schema_extra={"public": True}
     )
+    prompts_dir: str = Field(
+        default="src/srv/prompt_templates/",
+        json_schema_extra={"public": True}
+    )
     
     model_config = SettingsConfigDict(env_file=".env")
     

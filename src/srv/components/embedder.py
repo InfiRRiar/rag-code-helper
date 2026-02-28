@@ -9,7 +9,7 @@ class Embedder(Embeddings):
     def embed_documents(self, texts: list[str]) -> list[list[float]]:
         res = httpx.post(
             url=f'{settings.base_embeddings_url}/embedding/docs', 
-            timeout=60,
+            timeout=150,
             json={
                 "docs": texts
             }
