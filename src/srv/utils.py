@@ -1,6 +1,7 @@
 from src.srv.components import ChromaOperator
 from langchain_text_splitters import TextSplitter
 import os
+from langchain_core.documents import Document
 
 def is_rag_file(file_path: str):
     if file_path.startswith(".") or "_" in file_path:
@@ -27,8 +28,10 @@ def parse_repositry(path: str, chroma_operator: ChromaOperator, splitter: TextSp
             file_content = open(full_path, "r").read()
             parts = splitter.split_text(file_content)
             parts = list(map(lambda x: "Candidate code snippet:\n" + x, parts))
-            chroma_operator.set_repository(path)
-            chroma_operator.add_items(parts)
+            if not len(parts):
+                continue
+            print(f"{full_path} added")
+            chroma_operator.add_items(parts, repo=path)
             
             total_files += 1
             total_chunks += len(parts)

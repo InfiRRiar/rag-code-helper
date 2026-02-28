@@ -8,7 +8,6 @@ dependencies = [
     "aiohttp>=3.13.3",
     "fastapi>=0.129.0",
     "huggingface-hub>=1.4.1",
-    "langchain-openai>=1.1.10",
     "loguru>=0.7.3",
     "pydantic>=2.12.5",
     "pydantic-settings>=2.13.1",
@@ -25,5 +24,6 @@ embs = [
 srv = [
     "langchain>=1.2.10",
     "langchain-chroma>=1.1.0",
+    "langchain-ollama>=1.0.1",
     "langchain-text-splitters>=1.1.1",
 ]

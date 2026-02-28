@@ -10,7 +10,7 @@ class ASTSplitter(TextSplitter):
         funcs = list()
         ast_tree = ast.parse(code)
         for node in ast.walk(ast_tree):
-            if any([isinstance(node, struct)] for struct in [ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]):
+            if any([isinstance(node, struct) for struct in [ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef]]):
                 segment = ast.get_source_segment(code, node)
                 funcs.append(segment)
-        print(funcs)
+        return funcs
