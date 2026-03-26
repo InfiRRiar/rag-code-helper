@@ -5,7 +5,7 @@ from src.srv.components.llm_operator import llm_operator
 
 
 chroma_operator = ChromaOperator(emb_fun=embedder)
-splitter = ASTSplitter(chunk_size=1024)
+splitter = ASTSplitter()
 
 def main_cycle(path: str):
     if not check_repository_input(path):

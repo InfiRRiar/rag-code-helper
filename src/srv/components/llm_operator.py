@@ -23,6 +23,7 @@ class LLMOperator:
     def stream(self, query, chunks: list[Document]):
         chunks = [chunk.page_content for chunk in chunks]
         fragments = "\n-----------------\n".join(chunks)
+        print(fragments)
         chat = self.messages.invoke({"question": query, "fragments": fragments})
         for batch in self.model.stream(chat):
             yield batch.content

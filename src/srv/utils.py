@@ -26,7 +26,7 @@ def parse_repositry(path: str, chroma_operator: ChromaOperator, splitter: TextSp
             if not is_rag_file(full_path):
                 continue
             file_content = open(full_path, "r").read()
-            parts = splitter.split_text(file_content)
+            parts = splitter.split_text(file_content, full_path)
             parts = list(map(lambda x: "Candidate code snippet:\n" + x, parts))
             if not len(parts):
                 continue
