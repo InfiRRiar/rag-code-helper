@@ -20,12 +20,14 @@ class LLMOperator:
             ]
         )
         
-    def stream(self, query, chunks: list[Document]):
-        chunks = [chunk.page_content for chunk in chunks]
-        fragments = "\n-----------------\n".join(chunks)
-        print(fragments)
-        chat = self.messages.invoke({"question": query, "fragments": fragments})
+    def invoke(self, data: dict):
+        chain = self.messages | self.model
+        return chain.invoke(data)
+        
+    def stream(self, data: dict):
+        chat = self.messages.invoke(data)
         for batch in self.model.stream(chat):
             yield batch.content
     
-llm_operator = LLMOperator("give_advice")
+llm_advice_giver = LLMOperator("give_advice")
+llm_request_normalizer = LLMOperator("normalize")

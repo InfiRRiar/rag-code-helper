@@ -10,7 +10,7 @@ Some fragments may be partially relevant.
 All fragments may be relevant.
 None of them may contain the requested logic.
 
-Your task is to determine what is actually relevant before explaining anything.
+Your task is to determine what is actually relevant before explaining anything. Then you should quote the chosen fragment, describe its location and explain its concept.
 
 Core Rules:
 

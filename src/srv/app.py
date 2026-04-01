@@ -1,8 +1,8 @@
 import argparse
 from src.srv.components import ChromaOperator, embedder, ASTSplitter
 from src.srv.utils import check_repository_input, parse_repositry
-from src.srv.components.llm_operator import llm_operator
-
+from src.srv.components.llm_operator import llm_advice_giver, llm_request_normalizer
+import time
 
 chroma_operator = ChromaOperator(emb_fun=embedder)
 splitter = ASTSplitter()
@@ -22,11 +22,18 @@ def main_cycle(path: str):
     while True:
         print("> ", end="")
         question = input()
-        query = "Find the most relevant code snippet given the following query:\n" + question
+        
+        normalized_query = llm_request_normalizer.invoke({"user_query": question}).content
+        print(normalized_query)
+        query = "Find the most relevant code snippet given the following query:\n" + normalized_query
+        
         chunks = chroma_operator.get_top_k(query=query, repo=path, k=5)
-        for batch in llm_operator.stream(
-            query=question,
-            chunks=chunks
+        fragments = "\n-----------------\n".join([chunk.page_content for chunk in chunks])
+        for batch in llm_advice_giver.stream(
+            data={
+                "question": question,
+                "fragments": fragments
+            }
         ):
             print(batch, end="", flush=True)
         print()
