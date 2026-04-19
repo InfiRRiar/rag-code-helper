@@ -1,11 +1,9 @@
 import argparse
-from src.srv.components import ChromaOperator, embedder, ASTSplitter
+from src.srv.components import chroma_operator, ast_splitter
 from src.srv.utils import check_repository_input, parse_repositry
 from src.srv.components.llm_operator import llm_advice_giver, llm_request_normalizer
-import time
 
-chroma_operator = ChromaOperator(emb_fun=embedder)
-splitter = ASTSplitter()
+normalize_query = False
 
 def main_cycle(path: str):
     if not check_repository_input(path):
@@ -15,23 +13,23 @@ def main_cycle(path: str):
         total_files, total_chunks = parse_repositry(
             path=path,
             chroma_operator=chroma_operator,
-            splitter=splitter
+            splitter=ast_splitter
         )
         print(f"{total_files} files processed. {total_chunks} chunks ejected")
         
     while True:
         print("> ", end="")
-        question = input()
+        query = input()
         
-        normalized_query = llm_request_normalizer.invoke({"user_query": question}).content
-        print(normalized_query)
-        query = "Find the most relevant code snippet given the following query:\n" + normalized_query
+        if normalize_query:
+            query = llm_request_normalizer.invoke({"user_query": query}).content
+        query = "Find the most relevant code snippet given the following query:\n" + query
         
         chunks = chroma_operator.get_top_k(query=query, repo=path, k=5)
         fragments = "\n-----------------\n".join([chunk.page_content for chunk in chunks])
         for batch in llm_advice_giver.stream(
             data={
-                "question": question,
+                "question": query,
                 "fragments": fragments
             }
         ):

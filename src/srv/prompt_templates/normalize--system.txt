@@ -10,7 +10,8 @@ Rules:
 - Prefer keywords and short phrases over full sentences;
 - Do NOT answer the question;
 - Do NOT add new information;
-- Do NOT explain anything.
+- Do NOT explain anything;
+- Somtetimes it's reasonable to return user's query withput changes.
 
 Output format:
 - A single normalized query;
