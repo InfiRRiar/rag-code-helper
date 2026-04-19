@@ -43,3 +43,5 @@ class ASTSplitter(TextSplitter):
         with open("logs.txt", "w") as file:
             file.write(all_chunks)
         return chunks
+    
+ast_splitter = ASTSplitter()

@@ -1,6 +1,4 @@
 from langchain_ollama import ChatOllama
-from langchain_core.documents import Document
-from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate
 from src.settings import settings
 

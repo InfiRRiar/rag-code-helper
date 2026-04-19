@@ -1,6 +1,6 @@
 from langchain_chroma import Chroma
-from langchain_core.runnables import chain
 from langchain_core.documents import Document
+from src.srv.components.embedder import embedder
 
 
 def strs_to_docs(items: list[str], repo_name: str):
@@ -33,3 +33,5 @@ class ChromaOperator:
     def add_items(self, items: list[str], repo: str):
         docs = strs_to_docs(items=items, repo_name=repo)
         self.vector_store.add_documents(documents=docs)
+
+chroma_operator = ChromaOperator(emb_fun=embedder)

@@ -24,3 +24,5 @@ class Embedder(Embeddings):
             }
         ).json()[0]
         return res
+    
+embedder = Embedder()
