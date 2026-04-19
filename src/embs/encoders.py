@@ -38,5 +38,5 @@ class Encoder:
         emb = self.encoder(**tokenized_texts)
         pooled = self._last_token_pool(emb.last_hidden_state, tokenized_texts["attention_mask"])
         return pooled
-    
+
 bi_encoder = Encoder(model_name=settings.bi_encoder_name)
