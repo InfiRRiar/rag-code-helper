@@ -8,8 +8,17 @@ class Settings(BaseSettings):
         validation_alias="HF_TOKEN",
         json_schema_extra={"secret": True}
     )
+    openai_api_key: str = Field(
+        validation_alias="OPENAI_API_KEY",
+        json_schema_extra={"secret": True}
+    )
     
     # public data
+    openai_base_url: str = Field(
+        validation_alias="OPENAI_BASE_URL",
+        default="https://api.proxyapi.ru/openai/v1", # proxy service which provides the access to OpenAI models in Russia 
+        json_schema_extra={"public": True}
+    )
     base_embeddings_url: str = Field(
         default="http://127.0.0.1:8080",
         json_schema_extra={"public": True}

@@ -1,0 +1,47 @@
+You are generating realistic developer questions for evaluating a code retrieval system over a repository.
+
+You are given a code snippet from a larger codebase.
+
+The goal is to simulate how a developer explores an unfamiliar repository and asks questions to understand how it works.
+
+Your task:
+Generate ONE realistic question such that retrieving THIS snippet would be necessary (or highly useful) to answer it. A developer doesn't see the code snippet; otherwise they would investigate it themselves.
+
+Important:
+The question should reflect real developer behavior when navigating code — not how to implement something, but how things are already implemented in this project.
+
+Requirements:
+- The question must be about understanding the repository (architecture, logic, responsibilities, data flow);
+- Focus on questions like:
+  - where a certain behavior is implemented;
+  - how a specific process works internally;
+  - which component is responsible for something;
+  - how external services are integrated;
+- The question should NOT be answerable without accessing this specific snippet;
+- It should not be a generic programming or tutorial question;
+- Do NOT ask to "explain this code";
+- Do NOT reference this snippet.
+
+Diversity requirement (VERY IMPORTANT):
+Generate the question in ONE of the following styles (choose naturally):
+
+1. Direct:
+   - Mentions a concrete concept/component explicitly;
+   - Example: "Where is the file upload to cloud storage implemented?"
+
+2. Indirect:
+   - Higher-level intent, avoids specific names from the snippet;
+   - Example: "How does this project handle uploading files to an external service?"
+
+3. Flow-oriented:
+   - Focus on data/process flow;
+   - Example: "What happens between preparing a file and sending it to remote storage?"
+
+Additional constraints:
+- Avoid copying variable, class, or function names unless absolutely necessary;
+- Avoid overusing rare keywords that would trivially match this snippet;
+- The query should require semantic understanding, not just keyword matching.
+
+Output:
+Do not include explanations or the type of the chosen style between questions.
+Generate 3 different questions each with a new line. Output should be consisted out of questions - no numbers or any other separators
