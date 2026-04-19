@@ -1,7 +1,7 @@
 import argparse
 from src.srv.components import chroma_operator, ast_splitter
 from src.srv.utils import check_repository_input, parse_repositry
-from src.srv.components.llm_operator import llm_advice_giver, llm_request_normalizer
+from src.srv.components.llm_operator import llm_advice_giver, llm_request_normalizer, llm_request_translator
 
 normalize_query = False
 
@@ -20,7 +20,7 @@ def main_cycle(path: str):
     while True:
         print("> ", end="")
         query = input()
-        
+        query = llm_request_translator.invoke({"user_query": query}).content
         if normalize_query:
             query = llm_request_normalizer.invoke({"user_query": query}).content
         query = "Find the most relevant code snippet given the following query:\n" + query

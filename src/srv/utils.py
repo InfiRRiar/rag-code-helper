@@ -1,7 +1,6 @@
 from src.srv.components import ChromaOperator
 from langchain_text_splitters import TextSplitter
 import os
-from langchain_core.documents import Document
 
 def is_rag_file(file_path: str):
     if file_path.startswith(".") or "__" in file_path:
