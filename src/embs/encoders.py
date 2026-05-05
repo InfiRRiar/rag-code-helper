@@ -16,6 +16,7 @@ class Encoder:
             model_name,
             token=settings.hf_token
         )
+        self.encoder.eval()
         logger.info("init finished")
         
     def _last_token_pool(self, last_hidden_states, attention_mask):
@@ -35,8 +36,11 @@ class Encoder:
             max_length=MAX_LENGTH,
             return_tensors="pt"
         )
-        emb = self.encoder(**tokenized_texts)
-        pooled = self._last_token_pool(emb.last_hidden_state, tokenized_texts["attention_mask"])
+        with torch.no_grad():
+            emb = self.encoder(**tokenized_texts)
+            last_hidden_state = torch.detach(emb.last_hidden_state)
+        last_hidden_state /= torch.norm(last_hidden_state).item()
+        pooled = self._last_token_pool(last_hidden_state, tokenized_texts["attention_mask"])
         return pooled
 
 bi_encoder = Encoder(model_name=settings.bi_encoder_name)
