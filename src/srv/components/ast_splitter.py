@@ -39,9 +39,6 @@ class ASTSplitter(TextSplitter):
             segment = ast.get_source_segment(code, node)
             extra_info = f"# full file path: {file_location}\n" + extra_info
             chunks.append(extra_info + segment)
-        all_chunks = "\n\n\n".join(chunks)
-        with open("logs.txt", "w") as file:
-            file.write(all_chunks)
         return chunks
     
 ast_splitter = ASTSplitter()

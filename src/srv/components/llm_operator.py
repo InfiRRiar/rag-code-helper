@@ -2,7 +2,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.runnables import Runnable
 from langchain_core.prompts import ChatPromptTemplate
 from src.settings import settings
-from src.srv.components.generative_models import gpt_5
+from src.srv.components.generative_models import gpt_5, gpt_5_4
 
 class LLMOperator:
     def __init__(self, file_name, model: Runnable = None):
@@ -32,6 +32,6 @@ class LLMOperator:
         for batch in self.model.stream(chat):
             yield batch.content
     
-llm_advice_giver = LLMOperator("give_advice", model=gpt_5)
-llm_request_normalizer = LLMOperator("normalize")
+llm_advice_giver = LLMOperator("give_advice", model=gpt_5_4)
+llm_request_normalizer = LLMOperator("normalize", model=gpt_5)
 llm_request_translator = LLMOperator("translate", model=gpt_5)
