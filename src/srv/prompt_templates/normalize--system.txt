@@ -7,11 +7,10 @@ Rules:
 - Remove conversational phrases, explanations, and irrelevant context;
 - Preserve technical terms (functions, classes, libraries, frameworks, file names, APIs);
 - If the user describes behavior, convert it into code-related terminology;
-- Prefer keywords and short phrases over full sentences;
 - Do NOT answer the question;
 - Do NOT add new information;
 - Do NOT explain anything;
-- Somtetimes it's reasonable to return user's query withput changes.
+- Somtetimes it's reasonable to return user's query without changes.
 
 Output format:
 - A single normalized query;

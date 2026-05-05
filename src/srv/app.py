@@ -3,7 +3,7 @@ from src.srv.components import chroma_operator, ast_splitter
 from src.srv.utils import check_repository_input, parse_repositry
 from src.srv.components.llm_operator import llm_advice_giver, llm_request_normalizer, llm_request_translator
 
-normalize_query = False
+normalize_query = True
 
 def main_cycle(path: str):
     if not check_repository_input(path):
@@ -20,19 +20,21 @@ def main_cycle(path: str):
     while True:
         print("> ", end="")
         query = input()
-        query = llm_request_translator.invoke({"user_query": query}).content
+        en_query = llm_request_translator.invoke({"user_query": query}).content
         if normalize_query:
-            query = llm_request_normalizer.invoke({"user_query": query}).content
-        query = "Find the most relevant code snippet given the following query:\n" + query
+            en_query = llm_request_normalizer.invoke({"user_query": en_query}).content
+        en_query = "Find the most relevant code snippet given the following query:\n" + en_query
         
-        chunks = chroma_operator.get_top_k(query=query, repo=path, k=5)
+        chunks = chroma_operator.get_top_k(query=en_query, repo=path, k=5)
         fragments = "\n-----------------\n".join([chunk.page_content for chunk in chunks])
+        answer = ""
         for batch in llm_advice_giver.stream(
             data={
                 "question": query,
                 "fragments": fragments
             }
         ):
+            answer += batch
             print(batch, end="", flush=True)
         print()
         
