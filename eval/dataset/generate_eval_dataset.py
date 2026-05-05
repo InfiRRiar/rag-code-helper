@@ -29,19 +29,18 @@ data = chroma_operator.vector_store._collection.get()
 
 def generate_questions():
     test_questions = {
-        "chunk_id": [],
+        "chunk": [],
         "question": []
     }
     for i in tqdm(range(len(data["ids"]))):
         content = data["documents"][i]
-        doc_id = data["ids"][i]
         input = {
                 "system_prompt": prompt,
                 "code_snippet": content
             }
         res = chain.invoke(input).split("\n")
         for chunk in res:
-            test_questions["chunk_id"].append(doc_id)
+            test_questions["chunk"].append(content)
             test_questions["question"].append(chunk.strip())
 
     return test_questions
